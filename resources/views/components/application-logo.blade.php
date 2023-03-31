@@ -1,0 +1,1 @@
+<img src="{{ asset('logo/computing.png') }}" width="350px">

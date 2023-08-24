@@ -13,6 +13,10 @@ use App\Http\Controllers\WorkloadController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\AdmincourseController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\AddBookbankController;
+use App\Http\Controllers\ClassAttendanceController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -54,8 +58,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/searchTa/search',[AdmincourseController::class, 'search'])->name('search');
     Route::delete('reqs/{id}', [RequestController::class, 'delete'])->name('delete');
 
-    Route::get('users/export/', [TainfoController::class, 'export'])->name('export');
+    Route::get('users/export/{id}', [TainfoController::class, 'export'])->name('export');
+    Route::get('users/export/september/{id}', [TainfoController::class, 'monthsep'])->name('monthsep');
+    Route::get('users/exportattendance/{id}', [TainfoController::class, 'exportattendace'])->name('exportattendace');
+    
+    Route::get('attendexport', [TainfoController::class])->name('attendexport');
 
+    Route::resource('teacher',TeacherController::class);
+    Route::get('/teacherpage/{teacher_id}',[TeacherController::class, 'showTeacher'])->name('showTeacher');
+    Route::get('/subjectpage/{subject_id}',[TeacherController::class, 'showSubject'])->name('showSubject');
+    Route::resource('classattend',ClassAttendanceController::class);
+
+    Route::resource('adbookbank',AddBookbankController::class);
+
+    
 
 
 

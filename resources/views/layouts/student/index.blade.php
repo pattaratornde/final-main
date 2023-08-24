@@ -38,6 +38,8 @@
                                             <td class="d-none d-xl-table-cell">{{$ta->ta->name}}</td>
 											<td class="d-none d-xl-table-cell">{{$ta->course->subject_id}} {{$ta->course->subject->name_th}}</td>
 											<td class="d-none d-md-table-cell">{{$ta->course->teacher->position}}{{$ta->course->teacher->degree}} {{$ta->course->teacher->name}}</td>
+											<td class="d-none d-xl-table-cell"><a href="{{route('showSubject', $ta->course->subject_id)}}"class="align-middle">{{$ta->course->subject_id}} {{$ta->course->subject->name_th}}</td>
+											<td class="d-none d-md-table-cell"><a href="{{route('showTeacher', $ta->course->teacher->teacher_id)}}"class="align-middle">{{$ta->course->teacher->position}}{{$ta->course->teacher->degree}} {{$ta->course->teacher->name}}</a></td>
 											<td><a href="{{route('tainfo.show', $ta->id)}}"class="align-middle">รายละเอียด</a></td>
 										</tr>
                                         @endforeach

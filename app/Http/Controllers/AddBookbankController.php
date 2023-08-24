@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Tainfo;
+use App\Models\Bookbank;
 use App\Models\TaCourse;
-use App\Models\User;
-use App\Models\Course;
-use App\Models\Teaching;
-use App\Models\Attendance;
 use Auth;
 
-class AttendanceController extends Controller
+class AddBookbankController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +16,8 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        $attendance = Attendance::all();
-        return view('layouts.student.attendance',compact('attendance'));
+        return view('layouts.student.adbookbank');
+        //
     }
 
     /**
@@ -31,8 +27,7 @@ class AttendanceController extends Controller
      */
     public function create()
     {
-        $attendance = Attendance::all();
-        return view('layouts.student.attendance',compact('attendance'));
+        //
     }
 
     /**
@@ -43,25 +38,45 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-
-
-        $ta = new TaCourse;
-        $ta_user_id = Auth::user()->id;
-        $ta = TaCourse::where("ta_id",$ta_user_id)->get()->first();
-        $attendance = new Attendance;
-        /**dd($attendance);*/
-        $attendance->attend_data = request("attend_data");
-        $attendance->status = "W";
-        $attendance->approve_user_id = null;
-        $attendance->user_id = $ta_user_id;
-        $attendance->note = request("note");
-        $attendance->teaching_id = request('teaching_id');
-        $attendance->ta_id = $ta->ta_id;
-        /**dd($attendance);*/
-        $attendance->save();
-        return redirect(route('tainfo.index',$ta->id))->with('success', 'Data saved.');
+        $request->validate([
+            'bookbank_id' => 'required|unique:disbursements',
+            'bookbank_name' => 'required',
+            'bank_name' => 'required',
+        ],
+        [
+            'bookbank_id.required'=>"กรุณากรอกเลขที่บัญชี",						 
+            'bookbank_id.unique'=>"มีข้อมูลเลขที่บัญชีนี้เเล้ว",
+            'bookbank_name.required'=>"กรุณากรอกชื่อบัญชี",
+            'bank_name.required' => "กรุณากรอกธนาคาร",
+        ]
+   
+        );
 
         
+       
+        
+        $ta_user_id = Auth::user()->id;
+        $ta = TaCourse::where("ta_id",$ta_user_id)->get()->first();
+        $bookbank = new Bookbank;
+        $bookbank->bookbank_id = $request->bookbank_id ;
+        $bookbank->bookbank_name = $request->bookbank_name ;
+        $bookbank->bank_name = $request->bank_name ;
+        $bookbank->ta_id = $ta->ta_id;
+        $bookbank->save();
+
+        $filename = $request->file('filename');
+        $newfilename = $request->file('filename')->store('public/disbursements_files/');
+        $file = new Bookbank;
+        $file-> filename = basename($newfilename);
+        $file->save();
+
+       
+        
+        //dd($bookbank);        
+
+        return redirect()->route('request.index');
+
+        //
     }
 
     /**

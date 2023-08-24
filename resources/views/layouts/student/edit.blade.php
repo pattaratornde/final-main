@@ -21,7 +21,10 @@
                                         		@if ($courses->count())
                                             		@foreach($courses as $course)
 													<div class="card-body">
-                                                		<option defult-value="{{ $course->course_id }}" >{{$course->subject->subject_id}}  {{$course->subject->name_en}}</option>
+                                                			<option defult-value="{{ $course->course_id }}" >{{$course->subject->subject_id}}  {{$course->subject->name_en}}</option>
+														@foreach($otherCourses as $otherCourse)
+															<option value="{{ $otherCourse->course_id }}">{{ $otherCourse->subject->subject_id }} {{ $otherCourse->subject->name_en }}</option>
+														@endforeach
 													</div>   
                                             		@endforeach
                                         		@endif

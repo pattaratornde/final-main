@@ -43,4 +43,9 @@ class TaCourse extends Model
     {
         return $this->belongsTo('App\Models\Teaching','teaching_id');
     }
+
+    public function classattendance()
+    {
+        return $this->belongsTo('App\Models\ClassTypeAttendance','aact_no');
+    }
 }

@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Course;
 use App\Models\Tainfo;
 use App\Models\TaCourse;
-use App\Models\TA;
-use App\Models\StudentClass;
+use App\Models\User;
+use App\Models\Course;
 use App\Models\Teaching;
-use App\Models\Teacher;
-
+use App\Models\Attendance;
+use App\Models\StudentClass;
+use App\Models\ClassType;
+use App\Models\ClassTypeAttendance;
 use Auth;
 
-class DetailController extends Controller
+class ClassAttendanceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,9 +23,7 @@ class DetailController extends Controller
      */
     public function index()
     {
-        
-        $tadetail = TaCourse::findOrFail($ta_id);
-        return view('layouts.student.detail',compact('tadetail'));
+        //
     }
 
     /**
@@ -33,9 +31,16 @@ class DetailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $ta = new TaCourse;
+        $ta_user_id = Auth::user()->id;
+        $ta = TaCourse::where("ta_id",$ta_user_id)->get()->first();
+        $classattend = ClassTypeAttendance::all();
+        $course_id = $request->course_id;
+        $course = Course::where("course_id",$course_id)->first();
+        //dd($course);
+        return view('layouts.student.classattend',compact('classattend','course'));
     }
 
     /**
@@ -46,7 +51,19 @@ class DetailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ta = new TaCourse;
+        $ta_user_id = Auth::user()->id;
+        $ta = TaCourse::where("ta_id",$ta_user_id)->get()->first();
+        $classattend = new ClassTypeAttendance;
+        $classattend->aact_detail = request('aact_detail');
+        $classattend->start_work = request('start_work');
+        $classattend->duration = intval(request('duration_hours'))*60+intval(request('duration_minutes'));
+        $classattend->class_type_id = request('class_type_id');
+        $classattend->ta_id = $ta->ta_id;
+        //dd($classattend);
+        $classattend->save();
+        return redirect(route('tainfo.show',$request->id))->with('success', 'Data saved.');
+
     }
 
     /**
@@ -55,17 +72,9 @@ class DetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($ta_id)
+    public function show($id)
     {
-        $tadetail = TaCourse::findOrFail($ta_id);
-        foreach($tadetail->course->classes as $class)
-        {
-            $class = StudentClass::findOrFail();
-        }
-        //return view('layouts.student.calendar',compact('tacalendar'));
-        //return view('layouts.student.detail',compact('tadetail'));
-        
-
+        //
     }
 
     /**

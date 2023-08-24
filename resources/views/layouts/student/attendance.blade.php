@@ -18,14 +18,19 @@
                                         
                                             <div class="row">
                                                 <div class="col-xs-12 col-sm-12 col-md-12">
-                                                    <div class="form-group">
-                                                        <h4 class="card-title mb-0">การเข้าสอน</h4><br><br>
+                                                <div class="form-group">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">การเข้าสอน</label><br><br>
                                                         <input type="radio" id="classattend" name="attend_data" value="Y">
                                                         <label for="classattend"> เข้าปฎิบัติการสอน</label><br>
                                                         <input type="radio" id="classattend2" name="attend_data" value="N">
-                                                        <label for="classattend2"> ลา</label><br><br>
-                                                        <h5 class="card-title mb-0">หมายเหตุ :</h5><br>
-                                                        <textarea type="text" class="form-control" name="note"></textarea><br>
+                                                        <label for="classattend2"> ลา</label><br>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">หมายเหตุ</label><br>
+                                                        <input type="text" class="form-control" id="" name="note" value="เข้าปฏิบัติการสอน">
+                                                    </div>
+                                                    <div class="mb-3">
                                                         <button type="submit" class="btn btn-success">ส่งข้อมูล</button>
                                                     </div>
                                                 </div>

@@ -22,11 +22,14 @@
 	<link href="/assets/css/app.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Prompt">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
 	<style>
 		body {
   			font-family: "Prompt";
 		}
 	</style>
+	
 </head>
 
 <body>
@@ -52,6 +55,14 @@
 						<a class="sidebar-link" href="{{route('tainfo.index')}}">
               <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">ข้อมูลรายวิชาผู้ช่วยสอน</span>
             </a>
+
+				<li class="sidebar-item ">
+						<a class="sidebar-link" href="{{route('adbookbank.index')}}">
+              <i class="align-middle" data-feather="check-square"></i> <span class="align-middle">อัพโหลดเอกสารเบิกจ่ายผู้ช่วยสอน</span>
+            </a>
+
+
+			
 			@endif
 					</li>
 					

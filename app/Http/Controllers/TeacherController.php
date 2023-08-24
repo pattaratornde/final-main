@@ -11,10 +11,10 @@ use App\Models\TA;
 use App\Models\StudentClass;
 use App\Models\Teaching;
 use App\Models\Teacher;
-
+use App\Models\Subject;
 use Auth;
 
-class DetailController extends Controller
+class TeacherController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,9 +23,9 @@ class DetailController extends Controller
      */
     public function index()
     {
-        
-        $tadetail = TaCourse::findOrFail($ta_id);
-        return view('layouts.student.detail',compact('tadetail'));
+        /**$teacher_id = $request->teacher_id;
+        $teach = TaCourse::findOrFail($teacher_id);
+        return view('layouts.student.teacher',compact('teach'));*/
     }
 
     /**
@@ -57,15 +57,11 @@ class DetailController extends Controller
      */
     public function show($ta_id)
     {
-        $tadetail = TaCourse::findOrFail($ta_id);
-        foreach($tadetail->course->classes as $class)
+        $teach = TaCourse::findOrFail($ta_id);
+        foreach($teach->course->classes as $class)
         {
             $class = StudentClass::findOrFail();
         }
-        //return view('layouts.student.calendar',compact('tacalendar'));
-        //return view('layouts.student.detail',compact('tadetail'));
-        
-
     }
 
     /**
@@ -100,5 +96,29 @@ class DetailController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function showTeacher(Request $request)
+    {
+        $teacher_id = $request->teacher_id;
+
+        $teach = Teacher::find($teacher_id);
+        $courseteach = Course::where('owner_teacher_id',$teacher_id)->whereHas('semester',function($q){
+            $q->where('year','>=','2565');
+        })->get();
+        //dd($teach);
+
+        return view('layouts.student.teacher',compact('teach','courseteach'));
+    }
+    public function showSubject(Request $request)
+    {
+        $subject_id = $request->subject_id;
+
+        $subject = Subject::find($subject_id);
+        $courseSubject = Course::where('subject_id',$subject_id)->whereHas('semester',function($q){
+            $q->where('year','>=','2565');
+        })->get();
+        //dd($subject);
+
+        return view('layouts.student.subject',compact('subject','courseSubject'));
     }
 }

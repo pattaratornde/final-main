@@ -5,23 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attendance extends Model
+class ClassTypeAttendance extends Model
 {
     use HasFactory;
-    protected $table = "attendances";
-    protected $primaryKey = "attend_id";
+    protected $table = "class_type_attendances";
+    protected $primaryKey = "acct_no";
     protected $fillable = [
-        'attend_id',
-        'attend_data',
-        'status',
+        'acct_no',
+        'acct_detail',
+        'start_work',
+        'duration',
         'created_at',
         'updated_at',
-        'teaching_id',
-        'user_id',
-        'course_id',
-        'ta_id'
+        'class_type_id',
+        'ta_id',
     ];
-
     public function user()
     {
         return $this->belongsTo('App\Models\User','user_id');
@@ -46,4 +44,17 @@ class Attendance extends Model
     {
         return $this->belongsTo('App\Models\Teacher','teacher_id');
     }
+    public function attendance()
+    {
+        return $this->belongsTo('App\Models\Attendance','attend_id');
+    }
+    public function classType()
+    {
+        return $this->belongsTo('App\Models\ClassType','class_type_id');
+    }
+    public function tacourse()
+    {
+        return $this->belongsTo('App\Models\TaCourse','ta_id');
+    }
+
 }

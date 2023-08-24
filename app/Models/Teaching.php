@@ -35,4 +35,10 @@ class Teaching extends Model
     public function getDuration(){
         return intval((strtotime($this->end_time) - strtotime($this->start_time))/60);
     }
+    public function attendanceTa()
+    {
+        return $this->hasMany('App\Models\Attendance','teaching_id');
+    }
+    
+
 }
